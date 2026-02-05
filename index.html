@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XCS Reader - Lecteur de fichiers xTool</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔧 XCS Reader</h1>
+            <p class="subtitle">Lecteur de fichiers xTool Creative Space</p>
+        </header>
+
+        <section class="upload-section">
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-content">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17,8 12,3 7,8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p>Glissez-déposez un fichier <strong>.xcs</strong> ici</p>
+                    <p class="or">ou</p>
+                    <label class="file-input-label">
+                        <input type="file" id="fileInput" accept=".xcs" hidden>
+                        Parcourir les fichiers
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <section class="tabs-section" id="tabsSection" style="display: none;">
+            <!-- Navigation des onglets -->
+            <nav class="tabs-nav">
+                <button class="tab-btn active" data-tab="general">
+                    <span class="tab-icon">📋</span>
+                    <span class="tab-label">Général</span>
+                </button>
+                <button class="tab-btn" data-tab="device">
+                    <span class="tab-icon">🖨️</span>
+                    <span class="tab-label">Appareil</span>
+                </button>
+                <button class="tab-btn" data-tab="cover">
+                    <span class="tab-icon">🖼️</span>
+                    <span class="tab-label">Aperçu</span>
+                </button>
+                <button class="tab-btn" data-tab="canvas">
+                    <span class="tab-icon">🎨</span>
+                    <span class="tab-label">Canvas</span>
+                </button>
+                <button class="tab-btn" data-tab="layers">
+                    <span class="tab-icon">📚</span>
+                    <span class="tab-label">Calques</span>
+                </button>
+                <button class="tab-btn" data-tab="process">
+                    <span class="tab-icon">⚙️</span>
+                    <span class="tab-label">Traitement</span>
+                </button>
+                <button class="tab-btn" data-tab="elements">
+                    <span class="tab-icon">🔲</span>
+                    <span class="tab-label">Éléments</span>
+                </button>
+                <button class="tab-btn" data-tab="distances">
+                    <span class="tab-icon">📏</span>
+                    <span class="tab-label">Distances</span>
+                </button>
+                <button class="tab-btn" data-tab="json">
+                    <span class="tab-icon">📄</span>
+                    <span class="tab-label">JSON</span>
+                </button>
+            </nav>
+
+            <!-- Contenu des onglets -->
+            <div class="tabs-content">
+                <!-- Onglet: Informations générales -->
+                <div class="tab-pane active" id="tab-general">
+                    <div class="card">
+                        <h2>📋 Informations générales</h2>
+                        <div class="info-grid" id="generalInfo"></div>
+                    </div>
+                </div>
+
+                <!-- Onglet: Appareil -->
+                <div class="tab-pane" id="tab-device">
+                    <div class="card">
+                        <h2>🖨️ Appareil</h2>
+                        <div class="info-grid" id="deviceInfo"></div>
+                    </div>
+                </div>
+
+                <!-- Onglet: Aperçu / Couverture -->
+                <div class="tab-pane" id="tab-cover">
+                    <div class="card">
+                        <h2>🖼️ Aperçu du projet</h2>
+                        <div class="cover-container" id="coverContainer">
+                            <p class="no-data">Aucun aperçu disponible</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Onglet: Canvas -->
+                <div class="tab-pane" id="tab-canvas">
+                    <div class="card">
+                        <h2>🎨 Canvas</h2>
+                        <div id="canvasContainer"></div>
+                    </div>
+                </div>
+
+                <!-- Onglet: Calques -->
+                <div class="tab-pane" id="tab-layers">
+                    <div class="card">
+                        <h2>📚 Calques (Layers)</h2>
+                        <div id="layersContainer"></div>
+                    </div>
+                </div>
+
+                <!-- Onglet: Paramètres de traitement -->
+                <div class="tab-pane" id="tab-process">
+                    <div class="card">
+                        <h2>⚙️ Paramètres de traitement</h2>
+                        <div id="processSettingsContainer"></div>
+                    </div>
+                </div>
+
+                <!-- Onglet: Éléments graphiques -->
+                <div class="tab-pane" id="tab-elements">
+                    <div class="card">
+                        <h2>🔲 Éléments graphiques</h2>
+                        <div id="displaysContainer"></div>
+                    </div>
+                </div>
+
+                <!-- Onglet: Distances entre éléments -->
+                <div class="tab-pane" id="tab-distances">
+                    <div class="card">
+                        <h2>📏 Distances entre éléments</h2>
+                        <p class="distances-info">Distances calculées entre les centres des éléments (en mm)</p>
+                        <div class="distance-controls">
+                            <label class="distance-filter">
+                                <input type="checkbox" id="filterSameLayer" onchange="updateDistances()">
+                                <span>Afficher uniquement les éléments du même calque</span>
+                            </label>
+                            <label class="distance-sort">
+                                <span>Trier par:</span>
+                                <select id="distanceSort" onchange="updateDistances()">
+                                    <option value="distance">Distance (croissant)</option>
+                                    <option value="distance-desc">Distance (décroissant)</option>
+                                    <option value="name">Nom</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div id="distancesContainer"></div>
+                    </div>
+                </div>
+
+                <!-- Onglet: JSON brut -->
+                <div class="tab-pane" id="tab-json">
+                    <div class="card">
+                        <h2>📄 Données JSON brutes</h2>
+                        <div class="json-controls">
+                            <button class="btn-copy" onclick="copyJSON()">📋 Copier le JSON</button>
+                            <button class="btn-download" onclick="downloadJSON()">💾 Télécharger</button>
+                        </div>
+                        <pre id="rawJson"></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>XCS Reader - Lecteur de fichiers xTool Creative Space (.xcs)</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
