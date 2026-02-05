@@ -3,13 +3,13 @@
 > 🌐 **[English version](README.md)**
 
 **Lecteur de fichiers xTool Creative Space (.xcs)**
-
-Une application web statique permettant de visualiser et analyser le contenu des fichiers de projet xTool Creative Space.
-
+# https://usini.github.io/xcsReader/
+Une application web statique permettant de visualiser et analyser le contenu des fichiers de projet xTool Creative Space.   
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)    
+<img width="587" height="643.5" alt="image" src="https://github.com/user-attachments/assets/f9b019fb-66e2-457a-953a-e8dccc1427e3" />
 
 ## 📋 Description
 
