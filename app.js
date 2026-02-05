@@ -2,11 +2,16 @@
 // Lecteur de fichiers xTool Creative Space (.xcs)
 
 let currentXCSData = null;
+// Expose currentXCSData globally for i18n
+window.currentXCSData = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
     const tabsSection = document.getElementById('tabsSection');
+
+    // Initialize language
+    initLanguage();
 
     // Gestion du drag & drop
     dropZone.addEventListener('dragover', (e) => {
@@ -87,7 +92,7 @@ function switchTab(tabId) {
  */
 function handleFile(file) {
     if (!file.name.toLowerCase().endsWith('.xcs')) {
-        alert('Veuillez sélectionner un fichier .xcs');
+        alert(t('invalidFile'));
         return;
     }
 
@@ -96,9 +101,10 @@ function handleFile(file) {
         try {
             const xcsData = JSON.parse(e.target.result);
             currentXCSData = xcsData;
+            window.currentXCSData = xcsData;
             displayXCSData(xcsData);
         } catch (error) {
-            alert('Erreur lors de la lecture du fichier: ' + error.message);
+            alert(t('readError') + error.message);
             console.error(error);
         }
     };
@@ -191,7 +197,7 @@ function copyJSON() {
     if (currentXCSData) {
         const jsonText = JSON.stringify(currentXCSData, null, 2);
         navigator.clipboard.writeText(jsonText).then(() => {
-            alert('JSON copié dans le presse-papier !');
+            alert(t('jsonCopied'));
         }).catch(err => {
             console.error('Erreur lors de la copie:', err);
         });
@@ -224,15 +230,15 @@ function displayGeneralInfo(data) {
     container.innerHTML = '';
 
     const info = [
-        { label: 'Version', value: data.version || 'N/A' },
+        { label: t('version'), value: data.version || 'N/A' },
         { label: 'Canvas ID', value: data.canvasId || 'N/A' },
         { label: 'Extension ID', value: data.extId || 'N/A' },
         { label: 'Extension', value: data.extName || 'N/A' },
-        { label: 'Date de création', value: formatDate(data.created) },
-        { label: 'Date de modification', value: formatDate(data.modify) },
-        { label: 'Version minimum requise', value: data.minRequiredVersion || 'N/A' },
-        { label: 'Version app minimum', value: data.appMinRequiredVersion || 'N/A' },
-        { label: 'Version web minimum', value: data.webMinRequiredVersion || 'N/A' },
+        { label: t('createdAt'), value: formatDate(data.created) },
+        { label: t('modifiedAt'), value: formatDate(data.modify) },
+        { label: currentLang === 'fr' ? 'Version minimum requise' : 'Min required version', value: data.minRequiredVersion || 'N/A' },
+        { label: currentLang === 'fr' ? 'Version app minimum' : 'Min app version', value: data.appMinRequiredVersion || 'N/A' },
+        { label: currentLang === 'fr' ? 'Version web minimum' : 'Min web version', value: data.webMinRequiredVersion || 'N/A' },
         { label: 'Project Trace ID', value: data.projectTraceID || 'N/A' },
         { label: 'User Agent', value: data.ua || 'N/A' }
     ];
@@ -252,13 +258,13 @@ function displayDeviceInfo(data) {
     container.innerHTML = '';
 
     if (!data.device) {
-        container.innerHTML = '<p class="no-preview">Aucune information sur l\'appareil</p>';
+        container.innerHTML = `<p class="no-preview">${t('noData')}</p>`;
         return;
     }
 
     const device = data.device;
     const info = [
-        { label: 'Modèle', value: device.id || 'N/A' }
+        { label: currentLang === 'fr' ? 'Modèle' : 'Model', value: device.id || 'N/A' }
     ];
 
     info.forEach(item => {
@@ -271,16 +277,16 @@ function displayDeviceInfo(data) {
         powerDiv.className = 'info-item';
         powerDiv.style.gridColumn = '1 / -1';
         
-        let powerHtml = '<div class="info-label">Paramètres de puissance</div>';
+        let powerHtml = `<div class="info-label">${t('laserPower')}</div>`;
         powerHtml += '<div class="power-grid">';
         
         device.power.forEach(p => {
             powerHtml += `
                 <div class="power-item">
                     <div class="power-label">${p.name || 'Mode'}</div>
-                    <div><strong>Puissance:</strong> ${p.power || 'N/A'}%</div>
-                    <div><strong>Vitesse:</strong> ${p.speed || 'N/A'} mm/s</div>
-                    ${p.passes ? `<div><strong>Passes:</strong> ${p.passes}</div>` : ''}
+                    <div><strong>${t('power')}:</strong> ${p.power || 'N/A'}%</div>
+                    <div><strong>${t('speed')}:</strong> ${p.speed || 'N/A'} mm/s</div>
+                    ${p.passes ? `<div><strong>${t('passes')}:</strong> ${p.passes}</div>` : ''}
                 </div>
             `;
         });
@@ -1178,7 +1184,7 @@ function displayDistances(data) {
     container.innerHTML = '';
 
     if (!data.canvas || data.canvas.length === 0) {
-        container.innerHTML = '<p class="no-preview">Aucun élément disponible</p>';
+        container.innerHTML = `<p class="no-preview">${t('noElementAvailable')}</p>`;
         return;
     }
 
@@ -1186,7 +1192,7 @@ function displayDistances(data) {
     const displays = canvas.displays;
 
     if (!displays || displays.length < 2) {
-        container.innerHTML = '<p class="no-preview">Il faut au moins 2 éléments pour calculer les distances</p>';
+        container.innerHTML = `<p class="no-preview">${t('needTwoElements')}</p>`;
         return;
     }
 
@@ -1209,6 +1215,8 @@ function updateDistances() {
 
     // Calculer toutes les paires de distances
     const pairs = [];
+    
+    const elementLabel = currentLang === 'fr' ? 'Élément' : 'Element';
     
     for (let i = 0; i < displays.length; i++) {
         for (let j = i + 1; j < displays.length; j++) {
@@ -1248,8 +1256,8 @@ function updateDistances() {
                 distance,
                 distanceX,
                 distanceY,
-                name1: elem1.name || `Élément ${i + 1}`,
-                name2: elem2.name || `Élément ${j + 1}`
+                name1: elem1.name || `${elementLabel} ${i + 1}`,
+                name2: elem2.name || `${elementLabel} ${j + 1}`
             });
         }
     }
@@ -1273,10 +1281,10 @@ function updateDistances() {
             <table>
                 <thead>
                     <tr>
-                        <th>Élément 1</th>
+                        <th>${t('element1')}</th>
                         <th></th>
-                        <th>Élément 2</th>
-                        <th>Distance</th>
+                        <th>${t('element2')}</th>
+                        <th>${t('distance')}</th>
                         <th>ΔX</th>
                         <th>ΔY</th>
                     </tr>
@@ -1285,7 +1293,7 @@ function updateDistances() {
     `;
     
     if (pairs.length === 0) {
-        html += `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Aucune paire trouvée</td></tr>`;
+        html += `<tr><td colspan="6" style="text-align: center; color: var(--text-muted);">${t('noPairFound')}</td></tr>`;
     } else {
         pairs.forEach(pair => {
             const distClass = getDistanceClass(pair.distance);
@@ -1326,7 +1334,7 @@ function updateDistances() {
             </table>
         </div>
         <p class="distances-info" style="margin-top: 1rem;">
-            Total: <strong>${pairs.length}</strong> paires d'éléments
+            ${t('totalPairs')} <strong>${pairs.length}</strong> ${t('pairs')}
         </p>
     `;
     

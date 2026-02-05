@@ -9,8 +9,17 @@
 <body>
     <div class="container">
         <header>
-            <h1>🔧 XCS Reader</h1>
-            <p class="subtitle">Lecteur de fichiers xTool Creative Space</p>
+            <div class="header-top">
+                <div class="lang-selector">
+                    <span class="lang-icon">🌐</span>
+                    <select id="langSelect" onchange="setLanguage(this.value)">
+                        <option value="fr">Français</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+            </div>
+            <h1 data-i18n="appTitle">🔧 XCS Reader</h1>
+            <p class="subtitle" data-i18n="appSubtitle">Lecteur de fichiers xTool Creative Space</p>
         </header>
 
         <section class="upload-section">
@@ -21,11 +30,11 @@
                         <polyline points="17,8 12,3 7,8"></polyline>
                         <line x1="12" y1="3" x2="12" y2="15"></line>
                     </svg>
-                    <p>Glissez-déposez un fichier <strong>.xcs</strong> ici</p>
-                    <p class="or">ou</p>
+                    <p data-i18n="dropzoneText">Glissez-déposez un fichier <strong>.xcs</strong> ici</p>
+                    <p class="or" data-i18n="dropzoneOr">ou</p>
                     <label class="file-input-label">
                         <input type="file" id="fileInput" accept=".xcs" hidden>
-                        Parcourir les fichiers
+                        <span data-i18n="browseFiles">Parcourir les fichiers</span>
                     </label>
                 </div>
             </div>
@@ -36,39 +45,39 @@
             <nav class="tabs-nav">
                 <button class="tab-btn active" data-tab="general">
                     <span class="tab-icon">📋</span>
-                    <span class="tab-label">Général</span>
+                    <span class="tab-label" data-i18n="tabGeneral">Général</span>
                 </button>
                 <button class="tab-btn" data-tab="device">
                     <span class="tab-icon">🖨️</span>
-                    <span class="tab-label">Appareil</span>
+                    <span class="tab-label" data-i18n="tabDevice">Appareil</span>
                 </button>
                 <button class="tab-btn" data-tab="cover">
                     <span class="tab-icon">🖼️</span>
-                    <span class="tab-label">Aperçu</span>
+                    <span class="tab-label" data-i18n="tabCover">Aperçu</span>
                 </button>
                 <button class="tab-btn" data-tab="canvas">
                     <span class="tab-icon">🎨</span>
-                    <span class="tab-label">Canvas</span>
+                    <span class="tab-label" data-i18n="tabCanvas">Canvas</span>
                 </button>
                 <button class="tab-btn" data-tab="layers">
                     <span class="tab-icon">📚</span>
-                    <span class="tab-label">Calques</span>
+                    <span class="tab-label" data-i18n="tabLayers">Calques</span>
                 </button>
                 <button class="tab-btn" data-tab="process">
                     <span class="tab-icon">⚙️</span>
-                    <span class="tab-label">Traitement</span>
+                    <span class="tab-label" data-i18n="tabProcess">Traitement</span>
                 </button>
                 <button class="tab-btn" data-tab="elements">
                     <span class="tab-icon">🔲</span>
-                    <span class="tab-label">Éléments</span>
+                    <span class="tab-label" data-i18n="tabElements">Éléments</span>
                 </button>
                 <button class="tab-btn" data-tab="distances">
                     <span class="tab-icon">📏</span>
-                    <span class="tab-label">Distances</span>
+                    <span class="tab-label" data-i18n="tabDistances">Distances</span>
                 </button>
                 <button class="tab-btn" data-tab="json">
                     <span class="tab-icon">📄</span>
-                    <span class="tab-label">JSON</span>
+                    <span class="tab-label" data-i18n="tabJson">JSON</span>
                 </button>
             </nav>
 
@@ -77,7 +86,7 @@
                 <!-- Onglet: Informations générales -->
                 <div class="tab-pane active" id="tab-general">
                     <div class="card">
-                        <h2>📋 Informations générales</h2>
+                        <h2 data-i18n="titleGeneral">📋 Informations générales</h2>
                         <div class="info-grid" id="generalInfo"></div>
                     </div>
                 </div>
@@ -85,7 +94,7 @@
                 <!-- Onglet: Appareil -->
                 <div class="tab-pane" id="tab-device">
                     <div class="card">
-                        <h2>🖨️ Appareil</h2>
+                        <h2 data-i18n="titleDevice">🖨️ Appareil</h2>
                         <div class="info-grid" id="deviceInfo"></div>
                     </div>
                 </div>
@@ -93,9 +102,9 @@
                 <!-- Onglet: Aperçu / Couverture -->
                 <div class="tab-pane" id="tab-cover">
                     <div class="card">
-                        <h2>🖼️ Aperçu du projet</h2>
+                        <h2 data-i18n="titleCover">🖼️ Aperçu du projet</h2>
                         <div class="cover-container" id="coverContainer">
-                            <p class="no-data">Aucun aperçu disponible</p>
+                            <p class="no-data" data-i18n="noPreviewAvailable">Aucun aperçu disponible</p>
                         </div>
                     </div>
                 </div>
@@ -103,7 +112,7 @@
                 <!-- Onglet: Canvas -->
                 <div class="tab-pane" id="tab-canvas">
                     <div class="card">
-                        <h2>🎨 Canvas</h2>
+                        <h2 data-i18n="titleCanvas">🎨 Canvas</h2>
                         <div id="canvasContainer"></div>
                     </div>
                 </div>
@@ -111,7 +120,7 @@
                 <!-- Onglet: Calques -->
                 <div class="tab-pane" id="tab-layers">
                     <div class="card">
-                        <h2>📚 Calques (Layers)</h2>
+                        <h2 data-i18n="titleLayers">📚 Calques (Layers)</h2>
                         <div id="layersContainer"></div>
                     </div>
                 </div>
@@ -119,7 +128,7 @@
                 <!-- Onglet: Paramètres de traitement -->
                 <div class="tab-pane" id="tab-process">
                     <div class="card">
-                        <h2>⚙️ Paramètres de traitement</h2>
+                        <h2 data-i18n="titleProcess">⚙️ Paramètres de traitement</h2>
                         <div id="processSettingsContainer"></div>
                     </div>
                 </div>
@@ -127,7 +136,7 @@
                 <!-- Onglet: Éléments graphiques -->
                 <div class="tab-pane" id="tab-elements">
                     <div class="card">
-                        <h2>🔲 Éléments graphiques</h2>
+                        <h2 data-i18n="titleElements">🔲 Éléments graphiques</h2>
                         <div id="displaysContainer"></div>
                     </div>
                 </div>
@@ -135,15 +144,15 @@
                 <!-- Onglet: Distances entre éléments -->
                 <div class="tab-pane" id="tab-distances">
                     <div class="card">
-                        <h2>📏 Distances entre éléments</h2>
-                        <p class="distances-info">Distances calculées entre les centres des éléments (en mm)</p>
+                        <h2 data-i18n="titleDistances">📏 Distances entre éléments</h2>
+                        <p class="distances-info" data-i18n="distancesInfo">Distances calculées entre les centres des éléments (en mm)</p>
                         <div class="distance-controls">
                             <label class="distance-filter">
                                 <input type="checkbox" id="filterSameLayer" onchange="updateDistances()">
-                                <span>Afficher uniquement les éléments du même calque</span>
+                                <span data-i18n="filterSameLayer">Afficher uniquement les éléments du même calque</span>
                             </label>
                             <label class="distance-sort">
-                                <span>Trier par:</span>
+                                <span data-i18n="sortBy">Trier par:</span>
                                 <select id="distanceSort" onchange="updateDistances()">
                                     <option value="distance">Distance (croissant)</option>
                                     <option value="distance-desc">Distance (décroissant)</option>
@@ -158,10 +167,10 @@
                 <!-- Onglet: JSON brut -->
                 <div class="tab-pane" id="tab-json">
                     <div class="card">
-                        <h2>📄 Données JSON brutes</h2>
+                        <h2 data-i18n="titleJson">📄 Données JSON brutes</h2>
                         <div class="json-controls">
-                            <button class="btn-copy" onclick="copyJSON()">📋 Copier le JSON</button>
-                            <button class="btn-download" onclick="downloadJSON()">💾 Télécharger</button>
+                            <button class="btn-copy" onclick="copyJSON()" data-i18n="copyJson">📋 Copier le JSON</button>
+                            <button class="btn-download" onclick="downloadJSON()" data-i18n="downloadJson">💾 Télécharger</button>
                         </div>
                         <pre id="rawJson"></pre>
                     </div>
@@ -170,10 +179,11 @@
         </section>
 
         <footer>
-            <p>XCS Reader - Lecteur de fichiers xTool Creative Space (.xcs)</p>
+            <p data-i18n="footer">XCS Reader - Lecteur de fichiers xTool Creative Space (.xcs)</p>
         </footer>
     </div>
 
+    <script src="i18n.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

@@ -38,6 +38,45 @@ body {
 header {
     text-align: center;
     margin-bottom: 2rem;
+    position: relative;
+}
+
+.header-top {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--card-background);
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+}
+
+.lang-icon {
+    font-size: 1.1rem;
+}
+
+.lang-selector select {
+    background-color: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.2rem;
+}
+
+.lang-selector select:focus {
+    outline: none;
+}
+
+.lang-selector select option {
+    background-color: var(--card-background);
+    color: var(--text-primary);
 }
 
 header h1 {
