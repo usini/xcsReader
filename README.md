@@ -3,8 +3,14 @@
 > 🌐 **[Version française](README_FR.md)**
 
 **xTool Creative Space file reader (.xcs)**
-
-A static web application that reads and displays the contents of XCS files used by xTool Creative Space laser engraving/cutting software.
+# https://usini.github.io/xcsReader/
+A static web application that reads and displays the contents of XCS files used by xTool Creative Space laser engraving/cutting software.   
+Built with: Visual Studio Code • GitHub Copilot • Claude Opus 4.5   
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)    
+<img width="587" height="643.5" alt="image" src="https://github.com/user-attachments/assets/f9b019fb-66e2-457a-953a-e8dccc1427e3" />
 
 ## ✨ Features
 
@@ -67,5 +73,7 @@ XCSREADER/
 The interface is available in French and English. The language can be changed via the dropdown menu in the top right corner. The preference is saved in the browser.
 
 ## 📝 License
+MIT License
 
-Open source project - Free to use and modify.
+## ⚠️ Warning
+This project is not affiliated with xTool. It is a community-driven tool for visualizing project files.   
